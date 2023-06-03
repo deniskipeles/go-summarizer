@@ -1,24 +1,32 @@
-# Start with the official Go image
-FROM golang:latest
+# Start from a base Go image
+FROM golang:1.17-alpine AS build
 
-# Set the working directory inside the container
+# Set the working directory
 WORKDIR /app
 
-# Copy the Go module files
-COPY go.mod .
-COPY go.sum .
+# Copy the go.mod and go.sum files to the working directory
+COPY go.mod go.sum ./
 
-# Download and cache Go modules
+# Download Go dependencies
 RUN go mod download
 
-# Copy the rest of the application source code
+# Copy the source code to the working directory
 COPY . .
 
 # Build the Go application
-RUN go build -o main .
+RUN go build -o app
 
-# Expose the port on which the server will listen
+# Start a new stage
+FROM alpine:latest
+
+# Set the working directory in the new stage
+WORKDIR /app
+
+# Copy the built executable from the previous stage
+COPY --from=build /app/app .
+
+# Expose the port that the server listens on
 EXPOSE 8080
 
-# Set the entry point for the container
-ENTRYPOINT ["./main"]
+# Run the Go application
+CMD ["./app"]
