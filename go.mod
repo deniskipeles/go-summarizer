@@ -1,6 +1,6 @@
 module your-module-name
 
-go 1.16
+go 1.19
 
 require (
     github.com/james-bowman/nlp
