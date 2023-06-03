@@ -87,14 +87,9 @@ func summarizeHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func helloHandler(w http.ResponseWriter, r *http.Request) {
-	fmt.Fprint(w, "Hello, World!")
-}
-
 func main() {
 	// Set up the HTTP server
 	http.HandleFunc("/summary", summarizeHandler)
-	http.HandleFunc("/", helloHandler)
 
 	// Start the server
 	fmt.Println("Server started on http://localhost:8080")
