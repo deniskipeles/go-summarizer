@@ -4,13 +4,13 @@ FROM golang:1.17-alpine AS build
 # Set the working directory
 WORKDIR /app
 
-# Copy the go.mod and go.sum files to the working directory
-COPY go.mod go.sum ./
+# Copy the go.mod file to the working directory
+COPY go.mod .
 
 # Download Go dependencies
 RUN go mod download
 
-# Copy the source code to the working directory
+# Copy the rest of the source code to the working directory
 COPY . .
 
 # Build the Go application
