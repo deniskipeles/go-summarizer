@@ -1,5 +1,3 @@
-package main
-
 import (
 	"encoding/json"
 	"fmt"
@@ -7,7 +5,6 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/jaytaylor/html2text"
 	"github.com/james-bowman/nlp"
 )
 
@@ -23,16 +20,9 @@ type ResponseBody struct {
 
 // summarizeText performs text summarization using the TextRank algorithm.
 func summarizeText(text string) string {
-	// Convert HTML to plain text
-	plainText, err := html2text.FromString(text)
-	if err != nil {
-		log.Println("Error converting HTML to plain text:", err)
-		return ""
-	}
-
 	// Tokenize the text
 	tokenizer := nlp.NewSentenceTokenizer(nil)
-	sentences := tokenizer.Tokenize(strings.NewReader(plainText))
+	sentences := tokenizer.Tokenize(strings.NewReader(text))
 
 	// Build a TextRank model
 	model := nlp.NewTextRank()
