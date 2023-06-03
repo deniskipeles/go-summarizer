@@ -5,9 +5,8 @@ WORKDIR /app
 # Copy the source code to the working directory
 COPY . .
 
-# Install the required dependencies
-RUN go get github.com/jaytaylor/html2text@v0.0.0-20200129193226-29cc3fb31f6e
-RUN go get github.com/james-bowman/nlp@v0.4.0
+# Download Go dependencies
+RUN go mod download
 
 # Build the Go application
 RUN go build -o main .
